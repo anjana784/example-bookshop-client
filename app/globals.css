@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Toastify__toast {
+  border-radius: 1rem !important;
+  height: auto !important;
+}
+
+.Toastify__toast--success {
+  border: 1px solid #4caf50 !important;
+  color: #4caf50 !important;
+}
+.Toastify__toast--warning {
+  border: 1px solid #ffc107 !important;
+  color: #ffc107 !important;
+}
+.Toastify__toast--error {
+  border: 0.5px solid #ff4444 !important;
+  color: #ff4444 !important;
+}
