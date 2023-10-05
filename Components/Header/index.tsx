@@ -5,19 +5,13 @@ import Link from "next/link";
 
 const Header: FC = () => {
   return (
-    <header className="w-screen h-20">
+    <header className="w-screen h-20 bg-themePrimaryBlue">
       <div className="w-5/6 m-auto h-full">
         <div className="w-full h-full flex">
           <div className="w-1/5 h-full">
             <div className="w-full h-full flex justify-center items-center">
               <Link href="/">
-                <Image
-                  src="/logo.png"
-                  width={150}
-                  height={150}
-                  alt="logo"
-                  className="cursor-pointer"
-                />
+                <h1 className="text-4xl font-bold">Logo</h1>
               </Link>
             </div>
           </div>

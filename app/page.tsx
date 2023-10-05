@@ -1,8 +1,7 @@
 import ContentArea from "@/Components/ContentArea";
 import { FC } from "react";
 import ModuleCard from "@/Components/ModuleCard";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
-import { PiUsersLight } from "react-icons/pi";
+import { BiSolidBookAlt } from "react-icons/bi";
 
 const Home: FC = () => {
   return (
@@ -11,7 +10,7 @@ const Home: FC = () => {
         <div className="w-full h-full flex justify-around items-center">
           <ModuleCard
             icon={
-              <LiaFileInvoiceSolid
+              <BiSolidBookAlt
                 className={
                   "text-themeText text-6xl border-themeText border-solid border-2 rounded-full p-2"
                 }
@@ -20,22 +19,8 @@ const Home: FC = () => {
             description="Click hear to get quick quotation
             or
             Search exciting quotations"
-            name="Quotation"
-            link="quotation"
-          />
-          <ModuleCard
-            icon={
-              <PiUsersLight
-                className={
-                  "text-themeText text-6xl border-themeText border-solid border-2 rounded-full p-2"
-                }
-              />
-            }
-            description="Click hear to edit customers
-            or
-            Search exiting customers"
-            name="Customer"
-            link="customer"
+            name="Books"
+            link="books"
           />
         </div>
       </div>

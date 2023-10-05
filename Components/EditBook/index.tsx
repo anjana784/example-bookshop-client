@@ -12,7 +12,7 @@ interface Props {
   customer: CustomerResponse;
 }
 
-const EditCutomer: FC<Props> = ({ customer }) => {
+const EditBook: FC<Props> = ({ customer }) => {
   const { popupState, setPopupState } = useStore((state) => state);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -98,4 +98,4 @@ const EditCutomer: FC<Props> = ({ customer }) => {
   );
 };
 
-export default EditCutomer;
+export default EditBook;

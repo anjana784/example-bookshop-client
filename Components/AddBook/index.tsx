@@ -10,7 +10,7 @@ import { Formik, Form, FieldArray } from "formik";
 import * as YUP from "yup";
 import FormikInput from "../FormikInput";
 
-const AddCutomer: FC = () => {
+const AddBook: FC = () => {
   const { popupState, setPopupState } = useStore((state) => state);
 
   // loading state
@@ -60,15 +60,10 @@ const AddCutomer: FC = () => {
       validationSchema={validationSchema}
     >
       <Form method="post" className="h-full w-full">
-        <FormikInput
-          name="companyName"
-          type="text"
-          label="Company name"
-          fullWidth
-        />
-        <FormikInput name="email" type="email" label="Email" fullWidth />
-        <FormikInput name="address" type="text" label="Address" fullWidth />
-        <FormikInput name="phone" type="text" label="Phone" fullWidth />
+        <FormikInput name="companyName" type="text" label="Name" fullWidth />
+        <FormikInput name="email" type="email" label="Author" fullWidth />
+        <FormikInput name="address" type="text" label="Genre" fullWidth />
+        <FormikInput name="phone" type="text" label="Price" fullWidth />
         {submissionError && (
           <p className="text-themeError">{submissionError}</p>
         )}
@@ -85,4 +80,4 @@ const AddCutomer: FC = () => {
   );
 };
 
-export default AddCutomer;
+export default AddBook;

@@ -11,23 +11,23 @@ import AppSearch from "@/Components/AppSearch";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useCustomers from "@/Hooks/useCustomers";
 import { useStore } from "@/Store";
-import AddCutomer from "@/Components/AddCustomer";
-import EditCutomer from "@/Components/EditCustomer";
-import DeleteCutomer from "@/Components/DeleteCustomer";
+import AddBook from "@/Components/AddBook";
+import EditBook from "@/Components/EditBook";
+import DeleteBook from "@/Components/DeleteBook";
 
 const CustomerPage: FC = () => {
   const columns: TableColumn[] = [
     {
-      name: "Company Name",
+      name: "Name",
     },
     {
-      name: "Email",
+      name: "Author",
     },
     {
-      name: "Address",
+      name: "Genre",
     },
     {
-      name: "Phone",
+      name: "Price",
     },
     {
       name: "Actions",
@@ -41,8 +41,8 @@ const CustomerPage: FC = () => {
         action: () =>
           setPopupState({
             isOpen: true,
-            children: <EditCutomer customer={customer} />,
-            title: "Edit Customer",
+            children: <EditBook customer={customer} />,
+            title: "Edit Book",
           }),
       },
       {
@@ -50,8 +50,8 @@ const CustomerPage: FC = () => {
         action: () =>
           setPopupState({
             isOpen: true,
-            title: "Delete Cutomer",
-            children: <DeleteCutomer customer={customer} />,
+            title: "Delete Book",
+            children: <DeleteBook customer={customer} />,
           }),
       },
     ];
@@ -66,24 +66,24 @@ const CustomerPage: FC = () => {
       <div className="w-full h-16 flex justify-between items-center">
         <div>
           <AppButton
-            title="Add Customer"
+            title="Add Book"
             icon={<HiPlusSm />}
             onClick={() =>
               setPopupState({
                 isOpen: true,
-                title: "Add Customer",
-                children: <AddCutomer />,
+                title: "Add Book",
+                children: <AddBook />,
               })
             }
           />
         </div>
         <div>
-          <AppSearch placeholder="Search Customer" />
+          <AppSearch placeholder="Search Book" />
         </div>
       </div>
       <div>
         <AppTable columns={columns}>
-          {customers?.map((customer: CustomerResponse, index: number) => (
+          {/* {customers?.map((customer: CustomerResponse, index: number) => (
             <TableRow key={index} sx={{ maxHeight: 100 }}>
               <TableCell>{customer.companyName}</TableCell>
               <TableCell>{customer.email}</TableCell>
@@ -107,7 +107,30 @@ const CustomerPage: FC = () => {
                 </i>
               </TableCell>
             </TableRow>
-          ))}
+          ))} */}
+          <TableRow sx={{ maxHeight: 100 }}>
+            <TableCell>Example Name</TableCell>
+            <TableCell>Example author</TableCell>
+            <TableCell>Example Genre</TableCell>
+            <TableCell>Example price</TableCell>
+            <TableCell align="center">
+              <i
+                className="relative"
+                // onClick={(e) =>
+                //   setActionPopupState({
+                //     isOpen: true,
+                //     actions: generateActions(customer),
+                //     position: {
+                //       x: e.clientX,
+                //       y: e.clientY,
+                //     },
+                //   })
+                // }
+              >
+                <BsThreeDotsVertical className="cursor-pointer action hover:bg-themeBackgroundDark transition-all delay-100 text-3xl p-2 rounded-full action" />
+              </i>
+            </TableCell>
+          </TableRow>
         </AppTable>
       </div>
     </ContentArea>
