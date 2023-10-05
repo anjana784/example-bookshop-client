@@ -1,6 +1,6 @@
 "use client";
 import AppTable from "@/Components/AppTable";
-import { Action, CustomerResponse, TableColumn } from "@/utils/types";
+import { Action, Book, TableColumn } from "@/utils/types";
 import { FC } from "react";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -9,7 +9,7 @@ import AppButton from "@/Components/AppButton";
 import { HiPlusSm } from "react-icons/hi";
 import AppSearch from "@/Components/AppSearch";
 import { BsThreeDotsVertical } from "react-icons/bs";
-// import useCustomers from "@/Hooks/useCustomers";
+import useBooks from "@/Hooks/useBooks";
 import { useStore } from "@/Store";
 import AddBook from "@/Components/AddBook";
 import EditBook from "@/Components/EditBook";
@@ -34,14 +34,14 @@ const CustomerPage: FC = () => {
     },
   ];
 
-  const generateActions = (customer: CustomerResponse): Action[] => {
+  const generateActions = (book: Book): Action[] => {
     return [
       {
         name: "Edit",
         action: () =>
           setPopupState({
             isOpen: true,
-            children: <EditBook customer={customer} />,
+            children: <EditBook book={book} />,
             title: "Edit Book",
           }),
       },
@@ -51,7 +51,7 @@ const CustomerPage: FC = () => {
           setPopupState({
             isOpen: true,
             title: "Delete Book",
-            children: <DeleteBook customer={customer} />,
+            children: <DeleteBook book={book} />,
           }),
       },
     ];
@@ -59,7 +59,7 @@ const CustomerPage: FC = () => {
 
   const { setPopupState, setActionPopupState } = useStore((state) => state);
 
-  // const { customers, error, loading } = useCustomers();
+  const { books, isLoading, isError } = useBooks();
 
   return (
     <ContentArea>
@@ -83,19 +83,19 @@ const CustomerPage: FC = () => {
       </div>
       <div>
         <AppTable columns={columns}>
-          {/* {customers?.map((customer: CustomerResponse, index: number) => (
+          {books?.map((book: Book, index: number) => (
             <TableRow key={index} sx={{ maxHeight: 100 }}>
-              <TableCell>{customer.companyName}</TableCell>
-              <TableCell>{customer.email}</TableCell>
-              <TableCell>{customer.address}</TableCell>
-              <TableCell>{customer.phone}</TableCell>
+              <TableCell>{book.name}</TableCell>
+              <TableCell>{book.author}</TableCell>
+              <TableCell>{book.genre}</TableCell>
+              <TableCell>{book.price}</TableCell>
               <TableCell align="center">
                 <i
                   className="relative"
                   onClick={(e) =>
                     setActionPopupState({
                       isOpen: true,
-                      actions: generateActions(customer),
+                      actions: generateActions(book),
                       position: {
                         x: e.clientX,
                         y: e.clientY,
@@ -107,30 +107,7 @@ const CustomerPage: FC = () => {
                 </i>
               </TableCell>
             </TableRow>
-          ))} */}
-          <TableRow sx={{ maxHeight: 100 }}>
-            <TableCell>Example Name</TableCell>
-            <TableCell>Example author</TableCell>
-            <TableCell>Example Genre</TableCell>
-            <TableCell>Example price</TableCell>
-            <TableCell align="center">
-              <i
-                className="relative"
-                // onClick={(e) =>
-                //   setActionPopupState({
-                //     isOpen: true,
-                //     actions: generateActions(customer),
-                //     position: {
-                //       x: e.clientX,
-                //       y: e.clientY,
-                //     },
-                //   })
-                // }
-              >
-                <BsThreeDotsVertical className="cursor-pointer action hover:bg-themeBackgroundDark transition-all delay-100 text-3xl p-2 rounded-full action" />
-              </i>
-            </TableCell>
-          </TableRow>
+          ))}
         </AppTable>
       </div>
     </ContentArea>

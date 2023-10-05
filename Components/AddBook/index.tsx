@@ -1,17 +1,20 @@
 import { FC, useState } from "react";
 import AppButton from "../AppButton";
-// import { createCustomer } from "@/lib/customer";
-import { Customer } from "@/utils/types";
+import { createBook } from "@/lib/book";
+import { Book } from "@/utils/types";
 import { useStore } from "@/Store";
 import { toast } from "react-toastify";
 import { successIcon } from "../ToastifyIcons";
 import { mutate } from "swr";
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form } from "formik";
 import * as YUP from "yup";
 import FormikInput from "../FormikInput";
+import useBooks from "@/Hooks/useBooks";
 
 const AddBook: FC = () => {
   const { popupState, setPopupState } = useStore((state) => state);
+
+  const { mutateBooks } = useBooks();
 
   // loading state
   const [loading, setLoading] = useState<boolean>(false);
@@ -20,50 +23,50 @@ const AddBook: FC = () => {
   const [submissionError, setSubmissionError] = useState<String | null>(null);
 
   // customer state for the form
-  const customer: Customer = {
-    companyName: "",
-    email: "",
-    address: "",
-    phone: "",
+  const book: Book = {
+    name: "",
+    author: "",
+    genre: "",
+    price: "",
   };
 
   // validation schema for the customer
-  const validationSchema = YUP.object<Customer>({
-    companyName: YUP.string().required("Required"),
-    email: YUP.string().required("Required").email("invalid email"),
-    address: YUP.string().required("Required"),
-    phone: YUP.string().required("Required"),
+  const validationSchema = YUP.object<Book>({
+    name: YUP.string().required("Required"),
+    author: YUP.string().required("Required"),
+    genre: YUP.string().required("Required"),
+    price: YUP.number().required("Required"),
   });
 
   // handle the submitting a new customer
-  const handleSubmit = async (customer: Customer) => {
-    // setLoading(true);
-    // const response = await createCustomer(customer);
-    // setLoading(false);
-    // if (response) {
-    //   if (response.status === "error") {
-    //     setSubmissionError(response.message);
-    //   } else {
-    //     mutate("/api/customer");
-    //     setPopupState({ ...popupState, isOpen: false });
-    //     toast.success("Customer added successfully", {
-    //       icon: successIcon,
-    //     });
-    //   }
-    // }
+  const handleSubmit = async (book: Book) => {
+    setLoading(true);
+    const response = await createBook(book);
+    setLoading(false);
+    if (response) {
+      if (response.status === "error") {
+        setSubmissionError(response.message);
+      } else {
+        mutateBooks();
+        setPopupState({ ...popupState, isOpen: false });
+        toast.success("Book added successfully", {
+          icon: successIcon,
+        });
+      }
+    }
   };
 
   return (
     <Formik
-      initialValues={customer}
+      initialValues={book}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
       <Form method="post" className="h-full w-full">
-        <FormikInput name="companyName" type="text" label="Name" fullWidth />
-        <FormikInput name="email" type="email" label="Author" fullWidth />
-        <FormikInput name="address" type="text" label="Genre" fullWidth />
-        <FormikInput name="phone" type="text" label="Price" fullWidth />
+        <FormikInput name="name" type="text" label="Name" fullWidth />
+        <FormikInput name="author" type="text" label="Author" fullWidth />
+        <FormikInput name="genre" type="text" label="Genre" fullWidth />
+        <FormikInput name="price" type="number" label="Price" fullWidth />
         {submissionError && (
           <p className="text-themeError">{submissionError}</p>
         )}

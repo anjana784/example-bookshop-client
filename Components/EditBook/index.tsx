@@ -1,100 +1,111 @@
-import { FC, Fragment, useState } from "react";
-import AppInput from "../AppInput";
+import { FC, useState } from "react";
 import AppButton from "../AppButton";
-// import { updateCustomer } from "@/lib/customer";
-import { CustomerResponse, Customer } from "@/utils/types";
+import { updateBook } from "@/lib/book";
+import { Book } from "@/utils/types";
 import { useStore } from "@/Store";
 import { toast } from "react-toastify";
 import { successIcon } from "../ToastifyIcons";
-import { mutate } from "swr";
+import { Form, Formik } from "formik";
+import FormikInput from "../FormikInput";
+import * as YUP from "yup";
+import useBooks from "@/Hooks/useBooks";
 
 interface Props {
-  customer: CustomerResponse;
+  book: Book;
 }
 
-const EditBook: FC<Props> = ({ customer }) => {
+const EditBook: FC<Props> = ({ book }) => {
+  const { mutateBooks } = useBooks();
   const { popupState, setPopupState } = useStore((state) => state);
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<String | null>(null);
+  const [submissionError, setSubmissionError] = useState<String | null>(null);
 
-  const [customerState, setCustomerState] = useState<Customer>({
-    companyName: customer.companyName,
-    email: customer.email,
-    address: customer.address,
-    phone: customer.phone,
+  const [bookState, setBookState] = useState<Book>({
+    name: book.name,
+    author: book.author,
+    genre: book.genre,
+    price: book.price,
   });
 
-  const clickHandler = async () => {
-    // setLoading(true);
-    // const response = await updateCustomer(customer._id, {
-    //   companyName: customerState.companyName,
-    //   email: customerState.email,
-    //   address: customerState.address,
-    //   phone: customerState.phone,
-    // });
-    // setLoading(false);
-    // if (response) {
-    //   if (response.status === "error") {
-    //     setError(response.message);
-    //   } else {
-    //     mutate("/api/customer");
-    //     setPopupState({ ...popupState, isOpen: false });
-    //     toast.success("Customer updated successfully", {
-    //       icon: successIcon,
-    //     });
-    //   }
-    // }
+  // validation schema for the customer
+  const validationSchema = YUP.object<Book>({
+    name: YUP.string().required("Required"),
+    author: YUP.string().required("Required"),
+    genre: YUP.string().required("Required"),
+    price: YUP.number().required("Required"),
+  });
+
+  const handleSubmit = async (values: Book) => {
+    setLoading(true);
+    const response = await updateBook(book._id, {
+      name: values.name,
+      author: values.author,
+      genre: values.genre,
+      price: values.price,
+    });
+    setLoading(false);
+    if (response) {
+      if (response.status === "error") {
+        setSubmissionError(response.message);
+      } else {
+        mutateBooks();
+        setPopupState({ ...popupState, isOpen: false });
+        toast.success("book updated successfully", {
+          icon: successIcon,
+        });
+      }
+    }
   };
 
   return (
-    <Fragment>
-      <AppInput
-        placeholder="Company name"
-        fullWidth
-        className="my-4"
-        onChange={(e) =>
-          setCustomerState({ ...customerState, companyName: e.target.value })
-        }
-        value={customerState.companyName}
-      />
-      <AppInput
-        placeholder="Email"
-        fullWidth
-        className="my-4"
-        onChange={(e) =>
-          setCustomerState({ ...customerState, email: e.target.value })
-        }
-        value={customerState.email}
-      />
-      <AppInput
-        placeholder="Address"
-        fullWidth
-        className="my-4"
-        onChange={(e) =>
-          setCustomerState({ ...customerState, address: e.target.value })
-        }
-        value={customerState.address}
-      />
-      <AppInput
-        placeholder="Phone"
-        fullWidth
-        className="my-4"
-        onChange={(e) =>
-          setCustomerState({ ...customerState, phone: e.target.value })
-        }
-        value={customerState.phone}
-      />
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="absolute bottom-0 right-0">
-        <AppButton
-          title="Update"
-          onClick={clickHandler}
-          className="w-full"
-          loading={loading}
+    <Formik
+      initialValues={book}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
+      <Form method="post" className="h-full w-full">
+        <FormikInput
+          name="name"
+          type="text"
+          label="Name"
+          value={bookState.name}
+          fullWidth
         />
-      </div>
-    </Fragment>
+        <FormikInput
+          name="author"
+          type="text"
+          label="Author"
+          value={bookState.author}
+          fullWidth
+        />
+        <FormikInput
+          name="genre"
+          type="text"
+          label="Genre"
+          value={bookState.genre}
+          fullWidth
+        />
+        <FormikInput
+          name="price"
+          type="number"
+          label="Price"
+          value={bookState.price}
+          fullWidth
+        />
+        {submissionError && (
+          <p className="text-themeError">{submissionError}</p>
+        )}
+        <div className="absolute bottom-0 right-0">
+          <AppButton
+            title="Save"
+            className="w-full"
+            type="submit"
+            loading={loading}
+          />
+        </div>
+      </Form>
+    </Formik>
   );
 };
 
