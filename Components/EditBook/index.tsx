@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import AppInput from "../AppInput";
 import AppButton from "../AppButton";
-import { updateCustomer } from "@/lib/customer";
+// import { updateCustomer } from "@/lib/customer";
 import { CustomerResponse, Customer } from "@/utils/types";
 import { useStore } from "@/Store";
 import { toast } from "react-toastify";
@@ -26,25 +26,25 @@ const EditBook: FC<Props> = ({ customer }) => {
   });
 
   const clickHandler = async () => {
-    setLoading(true);
-    const response = await updateCustomer(customer._id, {
-      companyName: customerState.companyName,
-      email: customerState.email,
-      address: customerState.address,
-      phone: customerState.phone,
-    });
-    setLoading(false);
-    if (response) {
-      if (response.status === "error") {
-        setError(response.message);
-      } else {
-        mutate("/api/customer");
-        setPopupState({ ...popupState, isOpen: false });
-        toast.success("Customer updated successfully", {
-          icon: successIcon,
-        });
-      }
-    }
+    // setLoading(true);
+    // const response = await updateCustomer(customer._id, {
+    //   companyName: customerState.companyName,
+    //   email: customerState.email,
+    //   address: customerState.address,
+    //   phone: customerState.phone,
+    // });
+    // setLoading(false);
+    // if (response) {
+    //   if (response.status === "error") {
+    //     setError(response.message);
+    //   } else {
+    //     mutate("/api/customer");
+    //     setPopupState({ ...popupState, isOpen: false });
+    //     toast.success("Customer updated successfully", {
+    //       icon: successIcon,
+    //     });
+    //   }
+    // }
   };
 
   return (

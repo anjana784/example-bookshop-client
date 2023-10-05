@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import AppButton from "../AppButton";
-import { createCustomer } from "@/lib/customer";
+// import { createCustomer } from "@/lib/customer";
 import { Customer } from "@/utils/types";
 import { useStore } from "@/Store";
 import { toast } from "react-toastify";
@@ -37,20 +37,20 @@ const AddBook: FC = () => {
 
   // handle the submitting a new customer
   const handleSubmit = async (customer: Customer) => {
-    setLoading(true);
-    const response = await createCustomer(customer);
-    setLoading(false);
-    if (response) {
-      if (response.status === "error") {
-        setSubmissionError(response.message);
-      } else {
-        mutate("/api/customer");
-        setPopupState({ ...popupState, isOpen: false });
-        toast.success("Customer added successfully", {
-          icon: successIcon,
-        });
-      }
-    }
+    // setLoading(true);
+    // const response = await createCustomer(customer);
+    // setLoading(false);
+    // if (response) {
+    //   if (response.status === "error") {
+    //     setSubmissionError(response.message);
+    //   } else {
+    //     mutate("/api/customer");
+    //     setPopupState({ ...popupState, isOpen: false });
+    //     toast.success("Customer added successfully", {
+    //       icon: successIcon,
+    //     });
+    //   }
+    // }
   };
 
   return (

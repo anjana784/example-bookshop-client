@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import AppInput from "../AppInput";
 import AppButton from "../AppButton";
-import { deleteCustomer } from "@/lib/customer";
+// import { deleteCustomer } from "@/lib/customer";
 import { Customer, CustomerResponse } from "@/utils/types";
 import { useStore } from "@/Store";
 import { toast } from "react-toastify";
@@ -26,20 +26,20 @@ const DeleteBook: FC<Props> = ({ customer }) => {
   });
 
   const clickHandler = async () => {
-    setLoading(true);
-    const response = await deleteCustomer(customer._id);
-    setLoading(false);
-    if (response) {
-      if (response.status === "error") {
-        setError(response.message);
-      } else {
-        mutate("/api/customer");
-        setPopupState({ ...popupState, isOpen: false });
-        toast.success("Customer added successfully", {
-          icon: successIcon,
-        });
-      }
-    }
+    // setLoading(true);
+    // const response = await deleteCustomer(customer._id);
+    // setLoading(false);
+    // if (response) {
+    //   if (response.status === "error") {
+    //     setError(response.message);
+    //   } else {
+    //     mutate("/api/customer");
+    //     setPopupState({ ...popupState, isOpen: false });
+    //     toast.success("Customer added successfully", {
+    //       icon: successIcon,
+    //     });
+    //   }
+    // }
   };
 
   return (

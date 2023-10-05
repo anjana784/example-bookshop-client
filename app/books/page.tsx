@@ -9,7 +9,7 @@ import AppButton from "@/Components/AppButton";
 import { HiPlusSm } from "react-icons/hi";
 import AppSearch from "@/Components/AppSearch";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import useCustomers from "@/Hooks/useCustomers";
+// import useCustomers from "@/Hooks/useCustomers";
 import { useStore } from "@/Store";
 import AddBook from "@/Components/AddBook";
 import EditBook from "@/Components/EditBook";
@@ -59,7 +59,7 @@ const CustomerPage: FC = () => {
 
   const { setPopupState, setActionPopupState } = useStore((state) => state);
 
-  const { customers, error, loading } = useCustomers();
+  // const { customers, error, loading } = useCustomers();
 
   return (
     <ContentArea>
